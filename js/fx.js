@@ -104,3 +104,59 @@ function tick() {
   });
 }
 if (!reduced) requestAnimationFrame(tick);
+
+/* Intro sound: a synthesized glitch (stuttering noise, digital blips and a TV power down), timed to the logo animation */
+function glitchSound(ctx) {
+  const t = ctx.currentTime + 0.02;
+  const out = ctx.createGain(); out.gain.value = 0.45; out.connect(ctx.destination);
+  const len = Math.floor(ctx.sampleRate * 2.6);
+  const buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+  let hold = 0, val = 0;
+  for (let i = 0; i < len; i++) {
+    if (hold-- <= 0) { val = Math.random() * 2 - 1; hold = Math.random() < 0.02 ? Math.random() * 400 | 0 : Math.random() * 6 | 0; }
+    d[i] = val;
+  }
+  const n = ctx.createBufferSource(); n.buffer = buf;
+  const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = 0.7;
+  const g = ctx.createGain(); g.gain.value = 0;
+  n.connect(bp); bp.connect(g); g.connect(out);
+  [[0, 0.12, 0.1], [0.17, 0.1, 0.5], [0.34, 0.22, 0.7], [0.57, 0.08, 0.3], [0.65, 0.3, 0.8], [0.95, 0.08, 0.25], [1.1, 0.09, 0.9], [1.19, 0.3, 0.35]]
+    .forEach(([s, dur, v]) => { g.gain.setValueAtTime(v, t + s); g.gain.setValueAtTime(0.05, t + s + dur); });
+  g.gain.setValueAtTime(0.05, t + 1.5); g.gain.linearRampToValueAtTime(0.14, t + 2.28); g.gain.setValueAtTime(0, t + 2.32);
+  bp.frequency.setValueAtTime(900, t); bp.frequency.exponentialRampToValueAtTime(5200, t + 0.6);
+  bp.frequency.setValueAtTime(700, t + 0.65); bp.frequency.exponentialRampToValueAtTime(3800, t + 1.2);
+  n.start(t); n.stop(t + 2.6);
+  [[0.18, 220], [0.34, 880], [0.36, 440], [0.65, 1320], [0.67, 110], [1.1, 660], [1.12, 1760]].forEach(([s, f]) => {
+    const o = ctx.createOscillator(), og = ctx.createGain();
+    o.type = "square"; o.frequency.value = f;
+    og.gain.setValueAtTime(0.12, t + s); og.gain.exponentialRampToValueAtTime(0.001, t + s + 0.07);
+    o.connect(og); og.connect(out); o.start(t + s); o.stop(t + s + 0.08);
+  });
+  const o = ctx.createOscillator(), og = ctx.createGain();
+  o.type = "sawtooth"; o.frequency.setValueAtTime(2400, t + 2.3); o.frequency.exponentialRampToValueAtTime(40, t + 2.75);
+  og.gain.setValueAtTime(0, t); og.gain.setValueAtTime(0.22, t + 2.3); og.gain.exponentialRampToValueAtTime(0.001, t + 2.85);
+  o.connect(og); og.connect(out); o.start(t + 2.3); o.stop(t + 2.9);
+}
+
+/* Gate: browsers block sound until the visitor clicks. If we are blocked, wait for one click, then run the intro with sound. */
+(function intro() {
+  const body = document.body;
+  let started = false, ctx = null;
+  const go = withSound => {
+    if (started) return;
+    started = true;
+    body.classList.remove("is-gated", "needs-click");
+    if (withSound && ctx) { try { glitchSound(ctx); } catch (e) {} }
+    if (window.__cdOpen) window.__cdOpen();
+  };
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (reduced || !AC) return go(false);
+  try { ctx = new AC(); } catch (e) { return go(false); }
+  setTimeout(() => {
+    if (ctx.state === "running") return go(true);
+    body.classList.add("needs-click");
+    const unlock = () => { ctx.resume().then(() => go(true), () => go(false)); };
+    ["pointerdown", "keydown"].forEach(ev => addEventListener(ev, unlock, { once: true }));
+    setTimeout(() => go(false), 10000);
+  }, 200);
+})();
