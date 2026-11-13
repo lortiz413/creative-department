@@ -46,3 +46,53 @@ export const FILMS = [
     kind: { en: "Art film", es: "Film de arte" },
     desc: { en: "Marble, stairs and a question of scale.", es: "Mármol, escaleras y una cuestión de escala." } }
 ];
+
+// Fan films shown large
+export const FAN = [
+  { id: "harry", title: "Harry Potter",
+    kind: { en: "Fan film", es: "Fan film" },
+    desc: { en: "The last duel, moved to a black rock beach under a storm.", es: "El último duelo, mudado a una playa de roca negra bajo una tormenta." } },
+  { id: "quick", title: "Quicksilver",
+    kind: { en: "Fan film", es: "Fan film" },
+    desc: { en: "Time stops in the kitchen. He eats, fixes the guards and dances one merengue step.", es: "El tiempo se detiene en la cocina. Come, acomoda a los guardias y baila un pasito de merengue." } }
+];
+
+// Second strip. The first entry sits next to the heading.
+export const MORE = [
+  { id: "titan", title: "Attack on Titan",
+    kind: { en: "Fan film", es: "Fan film" },
+    desc: { en: "Two titans and one forest that will not survive them.", es: "Dos titanes y un bosque que no va a sobrevivirlos." } },
+  { id: "ath", title: "ATH Móvil",
+    kind: { en: "Brand film", es: "Film de marca" },
+    desc: { en: "Everyone stays frozen until the payment lands.", es: "Todo el mundo se queda congelado hasta que llega el pago." } },
+  { id: "dragons", title: "Game of Thrones",
+    kind: { en: "Fan film", es: "Fan film" },
+    desc: { en: "Dragon riders above the storm.", es: "Jinetes de dragón sobre la tormenta." } },
+  { id: "yuja", title: "Yuja Wang",
+    kind: { en: "Tribute", es: "Tributo" },
+    desc: { en: "A grand piano on a mountaintop at sunset.", es: "Un piano de cola en el tope de una montaña al atardecer." } },
+  { id: "kill", title: "Kill Luis",
+    kind: { en: "Fan film", es: "Fan film" },
+    desc: { en: "A Kill Bill homage with the wrong guy in the yellow suit.", es: "Un homenaje a Kill Bill con el tipo equivocado en el traje amarillo." } },
+  { id: "rav4", title: "RAV4",
+    kind: { en: "Brand film", es: "Film de marca" },
+    desc: { en: "Parallel parking in Old San Juan, with a little help.", es: "Estacionarse en paralelo en el Viejo San Juan, con una ayudita." } },
+  { id: "constantine", title: "Constantine",
+    kind: { en: "Fan film", es: "Fan film" },
+    desc: { en: "A visit to the other side.", es: "Una visita al otro lado." } },
+  { id: "thriller", title: "Lo Que Se Ve No Se Pregunta",
+    kind: { en: "Brand film", es: "Film de marca" },
+    desc: { en: "A thriller breaks out in the cinema lobby.", es: "Se forma un thriller en el lobby del cine." } },
+  { id: "jurassic", title: "Jurassic Paragliding",
+    kind: { en: "Fan film", es: "Fan film" },
+    desc: { en: "A paraglider drops into the wrong valley.", es: "Un parapente cae en el valle equivocado." } },
+  { id: "pulse", title: "Heart Rate",
+    kind: { en: "Spec ad", es: "Anuncio spec" },
+    desc: { en: "The watch notices her before he does.", es: "El reloj la nota antes que él." } },
+  { id: "rooftop", title: "Rooftop",
+    kind: { en: "Horror comedy", es: "Comedia de horror" },
+    desc: { en: "A rifle, a rooftop and a very slow crowd.", es: "Un rifle, una azotea y un público muy lento." } },
+  { id: "bedwell", title: "Bedwell",
+    kind: { en: "Motion design", es: "Motion design" },
+    desc: { en: "A dream in blue flowers.", es: "Un sueño en flores azules." } }
+];
