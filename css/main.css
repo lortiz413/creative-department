@@ -271,3 +271,13 @@ body:not(.is-loading) .stage__shadow{opacity:.92}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.55}}
 .work--3d{background:var(--char)}
 .work--3d .film__frame{background:#000}
+
+/* ================= Round 4: phones ================= */
+/* Touch screens get the plain version of the heavy layers: no blend mode over the moving type, no filter on the intro exit */
+@media (hover:none){
+  .row{will-change:auto}
+  .row span{transition:none}
+  .row__in{will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  .hero__light{mix-blend-mode:normal;opacity:.55}
+  body:not(.is-loading) .curtain{animation:none;opacity:0;visibility:hidden;transition:opacity .45s,visibility 0s .45s}
+}
