@@ -51,7 +51,13 @@ const strips = $$(".strip").map(el => ({ el, track: $(".strip__track", el), rev:
 /* ---------- Hero marquee text ---------- */
 const PHRASE = { en: "I make ideas move", es: "Hago que las ideas se muevan" };
 function fillRows() {
-  $$(".row__in").forEach(r => { r.innerHTML = Array(8).fill(`<span>${PHRASE[lang]}</span>`).join(""); });
+  // Only as many copies as the screen needs. Eight copies made a layer too wide for phone GPUs, and the text flickered.
+  $$(".row__in").forEach(r => {
+    const one = `<span>${PHRASE[lang]}</span>`;
+    r.innerHTML = one;
+    const w = r.firstChild.getBoundingClientRect().width || 1200;
+    r.innerHTML = Array(2 * Math.max(1, Math.ceil(innerWidth * 1.3 / w))).fill(one).join("");
+  });
 }
 
 /* ---------- Language ---------- */
@@ -211,7 +217,7 @@ io.observe(services);
 
 /* ---------- Go ---------- */
 applyLang();
-const lift = () => { document.body.classList.remove("is-loading"); measure(); };
+const lift = () => { if (!document.body.classList.contains("is-loading")) return; fillRows(); document.body.classList.remove("is-loading"); measure(); };
 const gate = window.__cdGate || Promise.resolve();
 const ready = Promise.all([document.fonts ? document.fonts.ready : 0, gate.then(() => new Promise(r => setTimeout(r, reduced ? 0 : 2300)))]);
 ready.then(lift);
