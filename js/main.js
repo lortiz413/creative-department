@@ -1,4 +1,4 @@
-import { FEATURED, FILMS, FAN, MORE } from "./works.js";
+import { FEATURED, FILMS, FAN, MORE, BUILT } from "./works.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -44,6 +44,7 @@ FEATURED.forEach(f => features.append(filmCard(f)));
 const track = $(".strip__track");
 FILMS.forEach(f => track.append(filmCard(f)));
 FAN.forEach(f => $("#features2").append(filmCard(f)));
+BUILT.forEach(f => $("#features3").append(filmCard(f)));
 MORE.forEach(f => $("#track2").prepend(filmCard(f)));
 const strips = $$(".strip").map(el => ({ el, track: $(".strip__track", el), rev: el.classList.contains("strip--rev"), dist: 0 }));
 
@@ -208,7 +209,8 @@ io.observe(services);
 /* ---------- Go ---------- */
 applyLang();
 const lift = () => { document.body.classList.remove("is-loading"); measure(); };
-const ready = Promise.all([document.fonts ? document.fonts.ready : 0, new Promise(r => setTimeout(r, reduced ? 0 : 2300))]);
+const gate = window.__cdGate || Promise.resolve();
+const ready = Promise.all([document.fonts ? document.fonts.ready : 0, gate.then(() => new Promise(r => setTimeout(r, reduced ? 0 : 2300)))]);
 ready.then(lift);
-setTimeout(lift, 4000);
+gate.then(() => setTimeout(lift, 4000));
 addEventListener("load", measure);
