@@ -63,7 +63,8 @@ function tick() {
   const y = scrollY, vh = innerHeight, vw = innerWidth;
   vel += ((y - lastY) - vel) * 0.18; lastY = y;
   const v = clamp(vel / 45, -1, 1);
-  root.style.setProperty("--vel", v.toFixed(3));
+  const vs = v.toFixed(2);
+  if (vs !== tick.v) { tick.v = vs; stripCards.forEach(s => s.el.style.setProperty("--vel", vs)); }
 
   heads.forEach(h => {
     const r = h.getBoundingClientRect();
@@ -155,8 +156,9 @@ function glitchSound(ctx) {
   setTimeout(() => {
     if (ctx.state === "running") return go(true);
     body.classList.add("needs-click");
-    const unlock = () => { ctx.resume().then(() => go(true), () => go(false)); };
-    ["pointerdown", "keydown"].forEach(ev => addEventListener(ev, unlock, { once: true }));
+    // Phones only unlock audio on a finished tap (touchend or click), and resume() may never answer, so enter right away
+    const unlock = () => { try { ctx.resume(); } catch (e) {} go(true); };
+    ["click", "touchend", "keydown"].forEach(ev => addEventListener(ev, unlock, { passive: true }));
     setTimeout(() => go(false), 10000);
   }, 200);
 })();
