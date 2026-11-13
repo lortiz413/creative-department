@@ -27,9 +27,12 @@ export const FILMS = [
   { id: "bee", title: "Your Brand Could Own This Moment",
     kind: { en: "Ad concept", es: "Concepto publicitario" },
     desc: { en: "A bee's eye ride through the park, with an open seat for a sponsor.", es: "Un paseo por el parque a vista de abeja, con un asiento libre para un auspiciador." } },
-  { id: "witch", title: "Wren Mora",
-    kind: { en: "Original series", es: "Serie original" },
+  { id: "witch", title: "The Witch",
+    kind: { en: "Wren Mora, original series", es: "Wren Mora, serie original" },
     desc: { en: "A young witch, a giant toad and a cat with opinions.", es: "Una brujita, un sapo gigante y un gato con opiniones." } },
+  { id: "slowmagic", title: "Slow Magic",
+    kind: { en: "Wren Mora, original series", es: "Wren Mora, serie original" },
+    desc: { en: "A broom ride over the lake and a picnic at the top of the world.", es: "Un paseo en escoba sobre el lago y un picnic en el tope del mundo." } },
   { id: "zombies", title: "My Therapist Said Stop Making Zombie Videos",
     kind: { en: "Horror comedy", es: "Comedia de horror" },
     desc: { en: "I did not stop.", es: "No paré." } },
@@ -95,4 +98,20 @@ export const MORE = [
   { id: "bedwell", title: "Bedwell",
     kind: { en: "Motion design", es: "Motion design" },
     desc: { en: "A dream in blue flowers.", es: "Un sueño en flores azules." } }
+];
+
+// Brand work planned in 3D, shown large
+export const BUILT = [
+  { id: "meson", title: "El Mesón Navidad",
+    kind: { en: "TV commercial, built almost entirely in Blender 3D", es: "Comercial de TV, hecho casi completo en Blender 3D" },
+    desc: { en: "A paper pop up card of Puerto Rico opens and the camera flies through four Christmas scenes.", es: "Una tarjeta pop up de papel de Puerto Rico se abre y la cámara vuela por cuatro escenas de Navidad." } },
+  { id: "gx", title: "Lexus GX",
+    kind: { en: "Brand film", es: "Film de marca" },
+    desc: { en: "One continuous shot: in through the rear window, around the dog and out the windshield.", es: "Una sola toma continua: entra por el cristal trasero, rodea al perro y sale por el parabrisas." } },
+  { id: "gxsplit", title: "Layout to Render",
+    kind: { en: "Lexus GX, 3D layout and final picture side by side", es: "Lexus GX, layout 3D e imagen final lado a lado" },
+    desc: { en: "The same shot twice: the 3D scene that planned the camera, and what it became.", es: "La misma toma dos veces: la escena 3D que planificó la cámara, y en lo que se convirtió." } },
+  { id: "precio", title: "Precio Final",
+    kind: { en: "Triangle Dealers, 3D blockout and final render", es: "Triangle Dealers, blockout 3D y render final" },
+    desc: { en: "A dealership blocked in simple shapes, then lit up with fireworks and balloons.", es: "Un dealer bloqueado en figuras simples, y después encendido con fuegos artificiales y bombas." } }
 ];
