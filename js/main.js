@@ -144,10 +144,13 @@ function frame() {
 
   // Hero: rows slide with scroll and the letters stretch with speed
   if (y < vh * 1.2 && !reduced) {
-    rows[0].style.transform = `translateX(${-y * 0.5}px)`;
-    rows[1].style.transform = `translateX(${y * 0.5 - 300}px)`;
-    const w = (62 + clamp(vel / 60) * 63).toFixed(0) + "%";
-    rows.forEach(r => r.style.setProperty("--w", w));
+    if (finePointer) {
+      // Desktop only: on phones the rows just run their own loop, stretching giant type every frame stutters there
+      rows[0].style.transform = `translateX(${-y * 0.5}px)`;
+      rows[1].style.transform = `translateX(${y * 0.5 - 300}px)`;
+      const w = (62 + clamp(vel / 60) * 63).toFixed(0) + "%";
+      if (w !== frame.w) { frame.w = w; rows.forEach(r => r.style.setProperty("--w", w)); }
+    }
     luis.style.setProperty("--zoom", (1 + clamp(y / vh) * 0.08).toFixed(3));
   }
 
