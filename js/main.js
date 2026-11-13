@@ -1,4 +1,4 @@
-import { FEATURED, FILMS } from "./works.js";
+import { FEATURED, FILMS, FAN, MORE } from "./works.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -28,7 +28,11 @@ function filmCard(f) {
     </div>`;
   b.setAttribute("aria-label", `${f.title}. Play`);
   const v = $("video", b);
-  const on = () => { b.classList.add("is-live"); v.play().catch(() => {}); };
+  const on = () => {
+    b.classList.add("is-live");
+    v.muted = window.__cdSound === false;
+    v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
+  };
   const off = () => { b.classList.remove("is-live"); v.pause(); };
   b.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") on(); });
   b.addEventListener("pointerleave", off);
@@ -39,6 +43,9 @@ const features = $("#features");
 FEATURED.forEach(f => features.append(filmCard(f)));
 const track = $(".strip__track");
 FILMS.forEach(f => track.append(filmCard(f)));
+FAN.forEach(f => $("#features2").append(filmCard(f)));
+MORE.forEach(f => $("#track2").prepend(filmCard(f)));
+const strips = $$(".strip").map(el => ({ el, track: $(".strip__track", el), rev: el.classList.contains("strip--rev"), dist: 0 }));
 
 /* ---------- Hero marquee text ---------- */
 const PHRASE = { en: "I make ideas move", es: "Hago que las ideas se muevan" };
@@ -123,10 +130,10 @@ function measure() {
     word.style.transformOrigin = `${ox.toFixed(2)}% 52%`;
   }
   sideways = !reduced && innerWidth > 820;
-  if (sideways) {
-    stripDist = Math.max(0, track.scrollWidth - innerWidth);
-    strip.style.height = `${innerHeight + stripDist}px`;
-  } else strip.style.height = "";
+  strips.forEach(s => {
+    if (sideways) { s.dist = Math.max(0, s.track.scrollWidth - innerWidth); s.el.style.height = `${innerHeight + s.dist}px`; }
+    else s.el.style.height = "";
+  });
   frame();
 }
 
@@ -167,11 +174,12 @@ function frame() {
   });
 
   // Sideways strip
-  if (sideways) {
-    const r = strip.getBoundingClientRect();
+  if (sideways) strips.forEach(s => {
+    const r = s.el.getBoundingClientRect();
+    if (r.top > vh || r.bottom < 0) return;
     const p = clamp(-r.top / (r.height - vh));
-    track.style.transform = `translateX(${(-p * stripDist).toFixed(1)}px)`;
-  }
+    s.track.style.transform = `translateX(${(-(s.rev ? 1 - p : p) * s.dist).toFixed(1)}px)`;
+  });
 
   // Services: light up the row at the middle of the screen, feed the 3D object
   const sr = services.getBoundingClientRect();
@@ -200,7 +208,7 @@ io.observe(services);
 /* ---------- Go ---------- */
 applyLang();
 const lift = () => { document.body.classList.remove("is-loading"); measure(); };
-const ready = Promise.all([document.fonts ? document.fonts.ready : 0, new Promise(r => setTimeout(r, reduced ? 0 : 1500))]);
+const ready = Promise.all([document.fonts ? document.fonts.ready : 0, new Promise(r => setTimeout(r, reduced ? 0 : 2300))]);
 ready.then(lift);
 setTimeout(lift, 4000);
 addEventListener("load", measure);
