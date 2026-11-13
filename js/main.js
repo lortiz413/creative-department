@@ -1,4 +1,4 @@
-import { FEATURED, FILMS, FAN, MORE, BUILT } from "./works.js";
+import { FEATURED, FILMS, FAN, MORE, BUILT } from "./works.js?v=6";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -52,12 +52,16 @@ const strips = $$(".strip").map(el => ({ el, track: $(".strip__track", el), rev:
 const PHRASE = { en: "I make ideas move", es: "Hago que las ideas se muevan" };
 function fillRows() {
   // Only as many copies as the screen needs. Eight copies made a layer too wide for phone GPUs, and the text flickered.
+  // The type size is set in plain pixels from here: sizes tied to the viewport height jump on iOS when its toolbar moves.
+  document.querySelector(".hero").style.setProperty("--rf", Math.round(clamp(innerHeight * 0.25, 90, 300)) + "px");
   $$(".row__in").forEach(r => {
     const one = `<span>${PHRASE[lang]}</span>`;
     r.innerHTML = one;
     const w = r.firstChild.getBoundingClientRect().width || 1200;
+    r.parentNode.__w = w;
     r.innerHTML = Array(2 * Math.max(1, Math.ceil(innerWidth * 1.3 / w))).fill(one).join("");
   });
+  fillRows.vw = innerWidth;
 }
 
 /* ---------- Language ---------- */
@@ -136,6 +140,7 @@ function measure() {
     const ox = ((er.left + er.width / 2 - wr.left) / wr.width) * 100;
     word.style.transformOrigin = `${ox.toFixed(2)}% 52%`;
   }
+  if (fillRows.vw && fillRows.vw !== innerWidth) fillRows();
   sideways = !reduced && innerWidth > 820;
   strips.forEach(s => {
     if (sideways) { s.dist = Math.max(0, s.track.scrollWidth - innerWidth); s.el.style.height = `${innerHeight + s.dist}px`; }
@@ -152,8 +157,6 @@ function frame() {
   if (y < vh * 1.2 && !reduced) {
     if (finePointer) {
       // Desktop only: on phones the rows just run their own loop, stretching giant type every frame stutters there
-      rows[0].style.transform = `translateX(${-y * 0.5}px)`;
-      rows[1].style.transform = `translateX(${y * 0.5 - 300}px)`;
       const w = (62 + clamp(vel / 60) * 63).toFixed(0) + "%";
       if (w !== frame.w) { frame.w = w; rows.forEach(r => r.style.setProperty("--w", w)); }
     }
@@ -223,3 +226,21 @@ const ready = Promise.all([document.fonts ? document.fonts.ready : 0, gate.then(
 ready.then(lift);
 gate.then(() => setTimeout(lift, 4000));
 addEventListener("load", measure);
+
+/* ---------- Hero rows: moved by script, one frame at a time ----------
+   iOS Safari has open bugs with looping CSS keyframe marquees (text drawn in the wrong place, layers vanishing
+   for a frame when the loop restarts), so the rows do not use CSS animation at all. */
+let mq = 0, mqT = 0;
+function marquee(t) {
+  requestAnimationFrame(marquee);
+  const dt = Math.min(50, t - (mqT || t)); mqT = t;
+  if (scrollY > innerHeight * 1.2) return;
+  mq += dt * 0.06;
+  const s = finePointer ? scrollY * 0.5 : 0;
+  rows.forEach((r, i) => {
+    const w = r.__w || 1200;
+    const x = i ? -w + ((mq * 0.8 + s) % w) : -((mq + s) % w);
+    r.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
+  });
+}
+if (!reduced) requestAnimationFrame(marquee);
