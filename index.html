@@ -16,7 +16,7 @@
 </head>
 <body class="is-loading">
 
-<div class="curtain" aria-hidden="true"><img src="assets/img/logo.png" alt=""></div>
+<div class="curtain" aria-hidden="true"><canvas class="curtain__static"></canvas><div class="curtain__logo"><i></i><i></i><i></i></div></div>
 <div class="cursor" aria-hidden="true"><span data-en="Play" data-es="Ver">Play</span></div>
 
 <header class="nav">
@@ -27,6 +27,7 @@
     <a href="#process" data-en="Process" data-es="Proceso">Process</a>
     <a href="#contact" data-en="Contact" data-es="Contacto">Contact</a>
   </nav>
+  <button class="nav__sound" type="button" aria-pressed="true"><span data-en="Sound on" data-es="Con sonido">Sound on</span></button>
   <button class="nav__lang" type="button" aria-label="Cambiar a español"><b>EN</b><i>ES</i></button>
 </header>
 
@@ -34,7 +35,7 @@
 
 <section class="hero" aria-label="Intro">
   <h1 class="sr" data-en="Creative Department. I make ideas move." data-es="Creative Department. Hago que las ideas se muevan.">Creative Department. I make ideas move.</h1>
-  <div class="stage stage--back"><div class="stage__wall"></div></div>
+  <div class="stage stage--back"><div class="stage__wall"></div><img class="stage__shadow stage__shadow--a" src="assets/img/luis.png" alt=""><img class="stage__shadow stage__shadow--b" src="assets/img/luis.png" alt=""></div>
   <div class="hero__light"></div>
   <div class="hero__type" aria-hidden="true">
     <div class="row row--a"><div class="row__in"></div></div>
@@ -70,6 +71,25 @@
       <div class="strip__intro">
         <h2 class="display" data-en="Then the originals." data-es="Y los originales.">Then the originals.</h2>
         <p data-en="Witches, wolves, pigeons and one island. Keep scrolling, it moves sideways." data-es="Brujas, lobos, palomas y una isla. Sigue bajando, esto se mueve de lado.">Witches, wolves, pigeons and one island. Keep scrolling, it moves sideways.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="work work--fan" id="fan">
+  <header class="work__head">
+    <h2 class="display" data-en="Borrowed worlds." data-es="Mundos prestados.">Borrowed worlds.</h2>
+    <p data-en="Fan films and brand pieces, made for the love of the craft. Every character and trademark belongs to its owner." data-es="Fan films y piezas de marca, hechos por amor al oficio. Cada personaje y cada marca pertenece a su dueño.">Fan films and brand pieces, made for the love of the craft. Every character and trademark belongs to its owner.</p>
+  </header>
+  <div class="feature" id="features2"></div>
+</section>
+
+<section class="strip strip--rev strip--dark" aria-label="More work">
+  <div class="strip__sticky">
+    <div class="strip__track" id="track2">
+      <div class="strip__intro">
+        <h2 class="display" data-en="And the rest of the vault." data-es="Y el resto de la bóveda.">And the rest of the vault.</h2>
+        <p data-en="This one runs the other way. Keep scrolling." data-es="Esta corre para el otro lado. Sigue bajando.">This one runs the other way. Keep scrolling.</p>
       </div>
     </div>
   </div>
@@ -138,5 +158,6 @@
 </div>
 
 <script type="module" src="js/main.js"></script>
+<script type="module" src="js/fx.js"></script>
 </body>
 </html>
