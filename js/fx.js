@@ -153,12 +153,6 @@ function glitchSound(ctx) {
   const AC = window.AudioContext || window.webkitAudioContext;
   if (reduced || !AC) return go(false);
   try { ctx = new AC(); } catch (e) { return go(false); }
-  setTimeout(() => {
-    if (ctx.state === "running") return go(true);
-    body.classList.add("needs-click");
-    // Phones only unlock audio on a finished tap (touchend or click), and resume() may never answer, so enter right away
-    const unlock = () => { try { ctx.resume(); } catch (e) {} go(true); };
-    ["click", "touchend", "keydown"].forEach(ev => addEventListener(ev, unlock, { passive: true }));
-    setTimeout(() => go(false), 10000);
-  }, 200);
+  // No button: the intro always runs by itself. It plays with sound when the browser allows it, silent when it does not.
+  setTimeout(() => go(ctx.state === "running"), 150);
 })();
