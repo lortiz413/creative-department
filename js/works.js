@@ -99,3 +99,19 @@ export const MORE = [
     kind: { en: "Motion design", es: "Motion design" },
     desc: { en: "A dream in blue flowers.", es: "Un sueño en flores azules." } }
 ];
+
+// Brand work planned in 3D, shown large
+export const BUILT = [
+  { id: "meson", title: "El Mesón Navidad",
+    kind: { en: "TV commercial, built almost entirely in Blender 3D", es: "Comercial de TV, hecho casi completo en Blender 3D" },
+    desc: { en: "A paper pop up card of Puerto Rico opens and the camera flies through four Christmas scenes.", es: "Una tarjeta pop up de papel de Puerto Rico se abre y la cámara vuela por cuatro escenas de Navidad." } },
+  { id: "gx", title: "Lexus GX",
+    kind: { en: "Brand film", es: "Film de marca" },
+    desc: { en: "One continuous shot: in through the rear window, around the dog and out the windshield.", es: "Una sola toma continua: entra por el cristal trasero, rodea al perro y sale por el parabrisas." } },
+  { id: "gxsplit", title: "Layout to Render",
+    kind: { en: "Lexus GX, 3D layout and final picture side by side", es: "Lexus GX, layout 3D e imagen final lado a lado" },
+    desc: { en: "The same shot twice: the 3D scene that planned the camera, and what it became.", es: "La misma toma dos veces: la escena 3D que planificó la cámara, y en lo que se convirtió." } },
+  { id: "precio", title: "Precio Final",
+    kind: { en: "Triangle Dealers, 3D blockout and final render", es: "Triangle Dealers, blockout 3D y render final" },
+    desc: { en: "A dealership blocked in simple shapes, then lit up with fireworks and balloons.", es: "Un dealer bloqueado en figuras simples, y después encendido con fuegos artificiales y bombas." } }
+];
