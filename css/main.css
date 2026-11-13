@@ -281,3 +281,11 @@ body:not(.is-loading) .stage__shadow{opacity:.92}
   .hero__light{mix-blend-mode:normal;opacity:.55}
   body:not(.is-loading) .curtain{animation:none;opacity:0;visibility:hidden;transition:opacity .45s,visibility 0s .45s}
 }
+
+/* ================= Round 5: hero rows without CSS animation ================= */
+/* The rows are moved by script (see main.js). No keyframes, fixed pixel type size, one flat layer per row. */
+.row__in{animation:none!important;will-change:auto}
+.row{will-change:transform;transform:translate3d(0,0,0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.row span{font-size:var(--rf,200px);transition:none}
+.row--b{paint-order:stroke fill}
+@media (hover:hover) and (pointer:fine){.row span{transition:font-stretch .25s linear}}
