@@ -259,3 +259,15 @@ body:not(.is-loading) .stage__shadow{opacity:.92}
   .curtain__logo i:nth-child(-n+2){display:none}
   body:not(.is-loading) .curtain{animation:none;opacity:0;visibility:hidden}
 }
+
+/* ================= Round 3 ================= */
+
+/* Gate: the browser only lets the intro make sound after a click, so when it blocks us we wait for one */
+.is-gated .curtain__logo{opacity:0}
+.is-gated .curtain__logo,.is-gated .curtain__logo i{animation-play-state:paused}
+.curtain__go{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);font-weight:800;font-stretch:110%;font-size:clamp(18px,2vw,30px);color:var(--bone);padding:22px 34px;border:2px solid var(--bone);border-radius:999px;background:rgba(0,0,0,.55);display:none;animation:blink 1.1s steps(1) infinite}
+.is-gated.needs-click .curtain__go{display:block}
+.is-gated.needs-click .curtain{cursor:pointer}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.55}}
+.work--3d{background:var(--char)}
+.work--3d .film__frame{background:#000}
