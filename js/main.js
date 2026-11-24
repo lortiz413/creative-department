@@ -1,4 +1,4 @@
-import { FEATURED, FILMS, FAN, MORE, BUILT, EXTRA, LEAD_IDS, CATS } from "./works.js?v=7";
+import { FEATURED, FILMS, FAN, MORE, BUILT, EXTRA, LEAD_IDS, CATS } from "./works.js?v=8";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -214,13 +214,7 @@ addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimat
 addEventListener("resize", measure);
 
 /* ---------- 3D: load only when the section is close ---------- */
-const io = new IntersectionObserver(es => {
-  if (es.some(e => e.isIntersecting)) {
-    io.disconnect();
-    import("./scene3d.js").then(m => m.start($("#scene3d"), reduced)).catch(() => { $(".services__viz").style.display = "none"; services.style.gridTemplateColumns = "1fr"; });
-  }
-}, { rootMargin: "100% 0px" });
-io.observe(services);
+// (The 3D knot is gone. The services screen is driven by stage.js now.)
 
 /* ---------- Go ---------- */
 // Phones get a lighter cut of the montage behind the word FILM
