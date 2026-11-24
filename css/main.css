@@ -289,3 +289,40 @@ body:not(.is-loading) .stage__shadow{opacity:.92}
 .row span{font-size:var(--rf,200px);transition:none}
 .row--b{paint-order:stroke fill}
 @media (hover:hover) and (pointer:fine){.row span{transition:font-stretch .25s linear}}
+
+/* ================= Round 6: curation, archive, brief ================= */
+.progress{position:fixed;left:0;top:0;z-index:60;width:100%;height:3px;background:var(--gel);transform-origin:0 50%;transform:scaleX(0);pointer-events:none}
+
+/* Archive grid with filters */
+.archive{padding:clamp(80px,14vh,180px) var(--pad);background:var(--char)}
+.archive .work__head{align-items:end}
+.filters{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+.filters button,.chip{font-weight:700;font-size:15px;padding:10px 18px;border:2px solid #4a3d41;border-radius:999px;color:var(--bone);transition:background .2s,color .2s,border-color .2s}
+.filters button:hover,.chip:hover{border-color:var(--bone)}
+.filters button[aria-pressed="true"],.chip[aria-pressed="true"]{background:var(--bone);border-color:var(--bone);color:var(--black)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:clamp(28px,4vw,56px) clamp(14px,1.8vw,30px)}
+.film[hidden]{display:none}
+.grid .film__frame{background:#000}
+.grid .film__title{font-size:clamp(26px,2.3vw,40px);line-height:.92;margin-top:12px;mix-blend-mode:normal}
+.grid .film__kind{font-size:14px;margin-top:6px}
+.grid .film__desc{font-size:15px;color:#cfc5c0;margin-top:2px}
+@media (max-width:720px){.filters{justify-content:flex-start}}
+
+/* Start a project */
+.fab{position:fixed;right:var(--pad);bottom:clamp(16px,3vh,32px);z-index:70;background:var(--gel);color:#fff;font-weight:800;font-size:16px;padding:16px 24px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .25s,opacity .3s}
+.fab:hover{transform:scale(1.05)}
+.fab[hidden]{display:none}
+.is-loading .fab,.fab.is-away{opacity:0;pointer-events:none}
+.brief{position:fixed;inset:0;z-index:85;background:rgba(0,0,0,.88);display:grid;place-items:center;padding:16px;overflow:auto}
+.brief[hidden]{display:none}
+.brief__box{position:relative;width:min(100%,640px);background:var(--char);border:1px solid #33292c;border-radius:22px;padding:clamp(22px,4vw,40px);display:grid;gap:18px}
+.brief__box h2{font-weight:900;font-stretch:75%;font-size:clamp(28px,4vw,44px);line-height:1;padding-right:70px}
+.brief__close{position:absolute;top:18px;right:22px;font-weight:700;padding:8px 0;border-bottom:2px solid var(--gel)}
+.brief fieldset{border:0;padding:0;margin:0}
+.brief legend,.brief label{font-weight:700;font-size:15px;color:#cfc5c0;padding:0;margin-bottom:10px;display:block}
+.brief__chips{display:flex;flex-wrap:wrap;gap:8px}
+.brief input,.brief textarea{display:block;width:100%;margin-top:8px;font:inherit;color:var(--bone);background:#0d0a0b;border:2px solid #4a3d41;border-radius:12px;padding:12px 14px;resize:vertical}
+.brief input:focus,.brief textarea:focus{outline:none;border-color:var(--bone)}
+.brief__send{justify-self:start;border:0;cursor:pointer}
+.brief__msg{min-height:1.4em;font-weight:600;color:var(--bone)}
+.brief__open{justify-self:start}
