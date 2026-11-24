@@ -1,4 +1,4 @@
-import { FEATURED, FILMS, FAN, MORE, BUILT } from "./works.js?v=6";
+import { FEATURED, FILMS, FAN, MORE, BUILT, EXTRA, LEAD_IDS, CATS } from "./works.js?v=7";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -40,12 +40,16 @@ function filmCard(f) {
   return b;
 }
 const features = $("#features");
-FEATURED.forEach(f => features.append(filmCard(f)));
-const track = $(".strip__track");
-FILMS.forEach(f => track.append(filmCard(f)));
-FAN.forEach(f => $("#features2").append(filmCard(f)));
-BUILT.forEach(f => $("#features3").append(filmCard(f)));
-MORE.forEach(f => $("#track2").prepend(filmCard(f)));
+// The lead pieces go large at the top, in the order of LEAD_IDS. Everything else lands in the archive grid.
+const ALL = [...BUILT, ...FEATURED, ...EXTRA, ...FILMS, ...FAN, ...MORE];
+const byId = Object.fromEntries(ALL.map(f => [f.id, f]));
+LEAD_IDS.forEach(id => { if (byId[id]) features.append(filmCard(byId[id])); });
+const archive = $("#archive");
+ALL.filter(f => !LEAD_IDS.includes(f.id)).forEach(f => {
+  const c = filmCard(f);
+  c.dataset.cat = CATS[f.id] || "original";
+  archive.append(c);
+});
 const strips = $$(".strip").map(el => ({ el, track: $(".strip__track", el), rev: el.classList.contains("strip--rev"), dist: 0 }));
 
 /* ---------- Hero marquee text ---------- */
@@ -219,6 +223,8 @@ const io = new IntersectionObserver(es => {
 io.observe(services);
 
 /* ---------- Go ---------- */
+// Phones get a lighter cut of the montage behind the word FILM
+sizzle.src = sizzle.dataset.src + (innerWidth < 820 ? "_m.mp4" : ".mp4");
 applyLang();
 const lift = () => { if (!document.body.classList.contains("is-loading")) return; fillRows(); document.body.classList.remove("is-loading"); measure(); };
 const gate = window.__cdGate || Promise.resolve();
