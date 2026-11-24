@@ -156,3 +156,34 @@ function glitchSound(ctx) {
   // No button: the intro always runs by itself. It plays with sound when the browser allows it, silent when it does not.
   setTimeout(() => go(ctx.state === "running"), 150);
 })();
+
+/* ===== Round 6 ===== */
+
+/* Reading progress along the top edge */
+const bar = document.createElement("div");
+bar.className = "progress"; bar.setAttribute("aria-hidden", "true");
+document.body.append(bar);
+let lastP = "";
+addEventListener("scroll", () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const p = (max > 0 ? scrollY / max : 0).toFixed(3);
+  if (p !== lastP) { lastP = p; bar.style.transform = `scaleX(${p})`; }
+}, { passive: true });
+
+/* Archive filters */
+const filterBtns = $$(".filters button");
+filterBtns.forEach(b => b.addEventListener("click", () => {
+  filterBtns.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  const c = b.dataset.cat;
+  $$("#archive .film").forEach(f => { f.hidden = c !== "all" && f.dataset.cat !== c; });
+}));
+
+/* Touch screens have no hover, so the lead pieces play muted by themselves while they are on screen */
+if (matchMedia("(hover: none)").matches && "IntersectionObserver" in window && !reduced) {
+  const vio = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target.querySelector("video");
+    if (e.isIntersecting) { v.muted = true; e.target.classList.add("is-live"); v.play().catch(() => {}); }
+    else { e.target.classList.remove("is-live"); v.pause(); }
+  }), { threshold: 0.55 });
+  $$(".feature .film").forEach(c => vio.observe(c));
+}
