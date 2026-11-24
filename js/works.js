@@ -112,3 +112,20 @@ export const BUILT = [
     kind: { en: "Triangle Dealers, 3D blockout and final render", es: "Triangle Dealers, blockout 3D y render final" },
     desc: { en: "A dealership blocked in simple shapes, then lit up with fireworks and balloons.", es: "Un dealer bloqueado en figuras simples, y después encendido con fuegos artificiales y bombas." } }
 ];
+
+// ===== Round 6: curation =====
+export const EXTRA = [
+  { id: "skullrider", title: "Skull Rider",
+    kind: { en: "Original character film", es: "Film de personaje original" },
+    desc: { en: "A burning skull, a spine framed bobber and a desert storm at night.", es: "Una calavera en fuego, una bobber con chasis de espina y una tormenta de desierto de noche." } }
+];
+
+// The pieces shown large at the top, in this order. Everything else goes to the archive.
+export const LEAD_IDS = ["meson", "gxsplit", "precio", "cupid", "rav4", "ath", "skullrider"];
+
+// Archive filter for each film: brand, original or fan. Anything not listed counts as original.
+export const CATS = {
+  meson: "brand", gxsplit: "brand", precio: "brand", cupid: "brand", vans: "brand", rav4: "brand", ath: "brand",
+  thriller: "brand", pulse: "brand", bee: "brand", isla: "brand", bedwell: "brand",
+  harry: "fan", quick: "fan", titan: "fan", dragons: "fan", kill: "fan", constantine: "fan", jurassic: "fan", yuja: "fan"
+};
